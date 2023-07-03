@@ -8,4 +8,4 @@ type
 ```console
 java -jar colorgen.jar
 ```
-then type g to generate colorgen
+then type g to generate a color
