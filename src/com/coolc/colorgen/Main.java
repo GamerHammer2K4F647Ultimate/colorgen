@@ -65,12 +65,11 @@ public class Main extends Canvas implements Runnable {
 		t = new Thread(this, "window");
 		t.start();
 		s = new Scanner(System.in);
-		//re = generateColor();
-		//gr = generateColor();
-		//b = generateColor();
 	}
 	
-	public static String input;
+	public static String input, hexval;
+	public static int howManyToGenerate;
+	public static int storedred, storedgreen, storedblue;
 	
 	public void run() {
 		while (running) {
@@ -82,20 +81,65 @@ public class Main extends Canvas implements Runnable {
 				re = generateColor();
 				gr = generateColor();
 				b = generateColor();
-				String hexval = makeHexStringNoAlpha(convertToHex(re), convertToHex(gr), convertToHex(b));
+				a = 255;
+				hexval = makeHexStringNoAlpha(convertToHex(re), convertToHex(gr), convertToHex(b));
 				System.out.printf("hex value: %s\n", hexval);
 				System.out.printf("rgb value: %d, %d, %d\n", re, gr, b);
+			} else if(input.equals("gm")) {
+				System.out.printf("how many do you want:");
+				howManyToGenerate = s.nextInt();
+				for (int i = 0; i < howManyToGenerate; ++i) {
+				  re = generateColor(); 
+				  gr = generateColor(); 
+				  b = generateColor(); 
+				  a = 255;
+				  hexval = makeHexStringNoAlpha(convertToHex(re), convertToHex(gr),
+				  convertToHex(b)); 
+				  System.out.printf("hex value: %s\n", hexval);
+				  System.out.printf("rgb value: %d, %d, %d\n", re, gr, b);
+				}
+			} else if(input.equals("gma")) {
+				System.out.printf("how many do you want:");
+				howManyToGenerate = s.nextInt();
+				for (int i = 0; i < howManyToGenerate; ++i) {
+				  re = generateColor(); 
+				  gr = generateColor(); 
+				  b = generateColor(); 
+				  a = generateColor();;
+				  hexval = makeHexString(convertToHex(re), convertToHex(gr), convertToHex(b), convertToHex(a)); 
+				  System.out.printf("hex value: %s\n", hexval);
+				  System.out.printf("rgba value: %d, %d, %d, %d\n", re, gr, b, a);
+				}
 			} else if(input.equals("ga")) {
 				re = generateColor();
 				gr = generateColor();
 				b = generateColor();
 				a = generateColor();
-				String hexval = makeHexString(convertToHex(re), convertToHex(gr), convertToHex(b), convertToHex(a));
+				hexval = makeHexString(convertToHex(re), convertToHex(gr), convertToHex(b), convertToHex(a));
 				System.out.printf("hex value: %s\n", hexval);
 				System.out.printf("rgba value: %d, %d, %d, %d\n", re, gr, b, a);
-			}
-			else if(input.equals("?")) {
-				System.out.printf("g    generates a new color\nga   generates a new color with an alpha value\n?    help\n");
+			} else if(input.equals("a")) {
+				a = generateColor();
+				System.out.printf("alpha value: %d\n", a);
+			} else if(input.equals("d")) {
+				a = generateColor();
+				System.out.printf("debug:\nv 1.1\ngc %s\nga %d\n\n", hexval, a);
+			} else if (input.equals("exit")) {
+				fr.dispose();
+				System.exit(0);
+			} else if(input.equals("?")) {
+				re = 0x1d;
+				gr = 0x00;
+				b = 0x58;
+				a = 100;
+				System.out.printf("g    generates a new color\n");
+				System.out.printf("ga   generates a new color with an alpha value\n");
+				System.out.printf("gm   generates more than one color\n");
+				System.out.printf("gma  generates more than one color with an alpha value\n");
+				System.out.printf("a    generates an alpha value\n");
+				System.out.printf("d    debugger\n");
+				System.out.printf("exit exits the program\n");
+				System.out.printf("?    help\n");
 			}
 		}
 	}
@@ -134,8 +178,9 @@ public class Main extends Canvas implements Runnable {
 
 	
 	public static void main(String [] args) {
-		System.out.println("color generator v1.0");
+		System.out.println("color generator v1.1");
 		System.out.println("? for help");
+		a = 255;
 		
 		s = new Scanner(System.in);
 		Main m = new Main();
@@ -148,5 +193,6 @@ public class Main extends Canvas implements Runnable {
 		m.fr.setVisible(true);
 		
 		m.start();
+		
 	}
 }
