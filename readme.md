@@ -2,10 +2,10 @@
 a random colorgen
 
 ## usage 
-download the jar
-open the command line (terminal or cmd)
-type 
-```console
-java -jar colorgen.jar
-```
-then type g to generate a color
+download the jar and launch.bat
+open launch.bat
+type `?` to get help
+
+## why did i make this
+i was bored
+
